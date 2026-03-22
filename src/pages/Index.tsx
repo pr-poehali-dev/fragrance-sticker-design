@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const TEXTURE_URL =
-  "https://cdn.poehali.dev/projects/daa402b5-c68c-47e9-a398-5ea317229873/files/d0a32005-5120-4511-bd5f-5cccfc42aeee.jpg";
+  "https://cdn.poehali.dev/projects/daa402b5-c68c-47e9-a398-5ea317229873/files/841c539d-5fd9-4b03-8152-c5aab779c52a.jpg";
 
 const Label = () => {
   const [visible, setVisible] = useState(false);
