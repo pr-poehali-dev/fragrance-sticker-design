@@ -15,8 +15,8 @@ const Label = () => {
     <div
       className="relative flex flex-col items-center justify-between"
       style={{
-        width: 320,
-        height: 480,
+        width: 330,
+        height: 230,
         background: `url(${TEXTURE_URL}) center/cover`,
         border: "1px solid #1a1a1a",
         padding: "40px 32px",
