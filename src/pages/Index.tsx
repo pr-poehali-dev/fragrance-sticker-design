@@ -7,267 +7,225 @@ const Label = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
+    const t = setTimeout(() => setVisible(true), 120);
     return () => clearTimeout(t);
   }, []);
 
+  const fade = (delay = 0) => ({
+    opacity: visible ? 1 : 0,
+    transform: visible ? "translateY(0)" : "translateY(10px)",
+    transition: `opacity 1.2s ease ${delay}s, transform 1.2s ease ${delay}s`,
+  });
+
   return (
     <div
-      className="relative flex flex-col items-center justify-between"
       style={{
-        width: 330,
-        height: 230,
+        width: 660,
+        height: 460,
+        position: "relative",
         background: `url(${TEXTURE_URL}) center/cover`,
         border: "1px solid #1a1a1a",
-        padding: "40px 32px",
         boxSizing: "border-box",
         overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "36px 44px",
       }}
     >
-      {/* Outer frame line */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 10,
-          border: "0.5px solid rgba(26,26,26,0.35)",
-          pointerEvents: "none",
-        }}
-      />
+      {/* Outer decorative frame */}
+      <div style={{ position: "absolute", inset: 12, border: "0.5px solid rgba(26,26,26,0.2)", pointerEvents: "none" }} />
+      {/* Corner marks TL */}
+      <div style={{ position: "absolute", top: 20, left: 20, width: 18, height: 18, borderTop: "0.5px solid #1a1a1a", borderLeft: "0.5px solid #1a1a1a" }} />
+      {/* Corner marks TR */}
+      <div style={{ position: "absolute", top: 20, right: 20, width: 18, height: 18, borderTop: "0.5px solid #1a1a1a", borderRight: "0.5px solid #1a1a1a" }} />
+      {/* Corner marks BL */}
+      <div style={{ position: "absolute", bottom: 20, left: 20, width: 18, height: 18, borderBottom: "0.5px solid #1a1a1a", borderLeft: "0.5px solid #1a1a1a" }} />
+      {/* Corner marks BR */}
+      <div style={{ position: "absolute", bottom: 20, right: 20, width: 18, height: 18, borderBottom: "0.5px solid #1a1a1a", borderRight: "0.5px solid #1a1a1a" }} />
 
-      {/* Top section */}
-      <div
-        className="flex flex-col items-center w-full"
-        style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(12px)",
-          transition: "opacity 1.2s ease, transform 1.2s ease",
-        }}
-      >
-        {/* Monogram / Logo */}
-        <div
-          style={{
+      {/* Top line */}
+      <div style={{ ...fade(0.1) }}>
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 16,
+        }}>
+          <div style={{ flex: 1, height: "0.5px", background: "rgba(26,26,26,0.25)", transformOrigin: "right", transform: visible ? "scaleX(1)" : "scaleX(0)", transition: "transform 1.4s ease 0.3s" }} />
+          <div style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 300,
-            fontSize: 11,
-            letterSpacing: "0.35em",
-            color: "#1a1a1a",
+            fontSize: 9,
+            letterSpacing: "0.55em",
+            color: "rgba(26,26,26,0.5)",
             textTransform: "uppercase",
-            marginBottom: 20,
-          }}
-        >
-          Parfums
+            whiteSpace: "nowrap",
+          }}>
+            Maison · Parfums
+          </div>
+          <div style={{ flex: 1, height: "0.5px", background: "rgba(26,26,26,0.25)", transformOrigin: "left", transform: visible ? "scaleX(1)" : "scaleX(0)", transition: "transform 1.4s ease 0.3s" }} />
         </div>
+      </div>
 
-        {/* Decorative monogram circle */}
-        <div
-          style={{
-            width: 72,
-            height: 72,
+      {/* Main body — three columns */}
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flex: 1,
+        paddingTop: 20,
+        paddingBottom: 20,
+        gap: 32,
+      }}>
+
+        {/* Left — Monogram */}
+        <div style={{ ...fade(0.2), display: "flex", flexDirection: "column", alignItems: "center", gap: 10, minWidth: 90 }}>
+          <div style={{
+            width: 80,
+            height: 80,
             borderRadius: "50%",
             border: "0.5px solid #1a1a1a",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginBottom: 20,
             position: "relative",
-          }}
-        >
-          <div
-            style={{
-              width: 60,
-              height: 60,
-              borderRadius: "50%",
-              border: "0.5px solid rgba(26,26,26,0.3)",
+          }}>
+            <div style={{
               position: "absolute",
-            }}
-          />
-          <span
-            style={{
+              width: 68,
+              height: 68,
+              borderRadius: "50%",
+              border: "0.5px solid rgba(26,26,26,0.25)",
+            }} />
+            <span style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontWeight: 400,
               fontStyle: "italic",
-              fontSize: 28,
+              fontSize: 32,
               color: "#1a1a1a",
-              letterSpacing: "-0.02em",
               lineHeight: 1,
-            }}
-          >
-            M
-          </span>
+              letterSpacing: "-0.02em",
+            }}>M</span>
+          </div>
+          <div style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 300,
+            fontSize: 8,
+            letterSpacing: "0.35em",
+            color: "rgba(26,26,26,0.45)",
+            textTransform: "uppercase",
+            textAlign: "center",
+          }}>Логотип</div>
         </div>
 
-        {/* Top divider */}
-        <div
-          style={{
-            width: "100%",
-            height: "0.5px",
-            background: "#1a1a1a",
-            transformOrigin: "left",
-            transform: visible ? "scaleX(1)" : "scaleX(0)",
-            transition: "transform 1.5s ease 0.4s",
-            marginBottom: 28,
-          }}
-        />
-      </div>
-
-      {/* Center — Name */}
-      <div
-        className="flex flex-col items-center"
-        style={{
+        {/* Center vertical divider */}
+        <div style={{
+          width: "0.5px",
+          height: 120,
+          background: "rgba(26,26,26,0.15)",
           opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(16px)",
-          transition: "opacity 1.4s ease 0.3s, transform 1.4s ease 0.3s",
-          textAlign: "center",
-          flex: 1,
-          justifyContent: "center",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
-            fontSize: 64,
-            letterSpacing: "-0.02em",
-            lineHeight: 0.95,
-            color: "#1a1a1a",
-          }}
-        >
-          23
-        </div>
-        <div
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
-            fontSize: 11,
-            letterSpacing: "0.5em",
-            color: "#1a1a1a",
-            margin: "6px 0",
-          }}
-        >
-          ·
-        </div>
-        <div
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
-            fontSize: 64,
-            letterSpacing: "-0.02em",
-            lineHeight: 0.95,
-            color: "#1a1a1a",
-          }}
-        >
-          33
-        </div>
+          transition: "opacity 1s ease 0.5s",
+        }} />
 
-        <div
-          style={{
+        {/* Center — Name */}
+        <div style={{ ...fade(0.3), textAlign: "center", flex: 1 }}>
+          <div style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 300,
+            fontSize: 88,
+            letterSpacing: "-0.04em",
+            lineHeight: 0.85,
+            color: "#1a1a1a",
+          }}>
+            23.33
+          </div>
+          <div style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 300,
             fontStyle: "italic",
             fontSize: 13,
-            letterSpacing: "0.15em",
-            color: "rgba(26,26,26,0.65)",
-            marginTop: 16,
-          }}
-        >
-          Eau de Parfum
+            letterSpacing: "0.2em",
+            color: "rgba(26,26,26,0.5)",
+            marginTop: 14,
+          }}>
+            Eau de Parfum
+          </div>
+        </div>
+
+        {/* Center vertical divider */}
+        <div style={{
+          width: "0.5px",
+          height: 120,
+          background: "rgba(26,26,26,0.15)",
+          opacity: visible ? 1 : 0,
+          transition: "opacity 1s ease 0.5s",
+        }} />
+
+        {/* Right — Details */}
+        <div style={{ ...fade(0.4), display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 20, minWidth: 90 }}>
+          <div style={{ textAlign: "right" }}>
+            <div style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 300,
+              fontSize: 8,
+              letterSpacing: "0.35em",
+              color: "rgba(26,26,26,0.4)",
+              textTransform: "uppercase",
+              marginBottom: 4,
+            }}>Объём</div>
+            <div style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 400,
+              fontSize: 18,
+              letterSpacing: "0.05em",
+              color: "#1a1a1a",
+            }}>50 ml</div>
+          </div>
+
+          <div style={{ width: 32, height: "0.5px", background: "rgba(26,26,26,0.2)" }} />
+
+          <div style={{ textAlign: "right" }}>
+            <div style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 300,
+              fontSize: 8,
+              letterSpacing: "0.35em",
+              color: "rgba(26,26,26,0.4)",
+              textTransform: "uppercase",
+              marginBottom: 4,
+            }}>Страна</div>
+            <div style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 400,
+              fontSize: 18,
+              letterSpacing: "0.05em",
+              color: "#1a1a1a",
+            }}>Россия</div>
+          </div>
         </div>
       </div>
 
-      {/* Bottom section */}
-      <div
-        className="flex flex-col items-center w-full"
-        style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(12px)",
-          transition: "opacity 1.6s ease 0.6s, transform 1.6s ease 0.6s",
-        }}
-      >
-        {/* Bottom divider */}
-        <div
-          style={{
-            width: "100%",
-            height: "0.5px",
-            background: "#1a1a1a",
-            transformOrigin: "right",
-            transform: visible ? "scaleX(1)" : "scaleX(0)",
-            transition: "transform 1.5s ease 0.8s",
-            marginBottom: 20,
-          }}
-        />
-
-        {/* Volume & Country */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100%",
-            alignItems: "flex-end",
-          }}
-        >
-          <div style={{ textAlign: "left" }}>
-            <div
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 300,
-                fontSize: 9,
-                letterSpacing: "0.3em",
-                color: "rgba(26,26,26,0.5)",
-                textTransform: "uppercase",
-                marginBottom: 3,
-              }}
-            >
-              Объём
-            </div>
-            <div
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 400,
-                fontSize: 15,
-                letterSpacing: "0.1em",
-                color: "#1a1a1a",
-              }}
-            >
-              50 ml
-            </div>
+      {/* Bottom line */}
+      <div style={{ ...fade(0.5) }}>
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 16,
+        }}>
+          <div style={{ flex: 1, height: "0.5px", background: "rgba(26,26,26,0.25)", transformOrigin: "right", transform: visible ? "scaleX(1)" : "scaleX(0)", transition: "transform 1.4s ease 0.8s" }} />
+          <div style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 300,
+            fontSize: 8,
+            letterSpacing: "0.5em",
+            color: "rgba(26,26,26,0.35)",
+            textTransform: "uppercase",
+          }}>
+            ✦
           </div>
-
-          <div
-            style={{
-              width: "0.5px",
-              height: 32,
-              background: "rgba(26,26,26,0.25)",
-            }}
-          />
-
-          <div style={{ textAlign: "right" }}>
-            <div
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 300,
-                fontSize: 9,
-                letterSpacing: "0.3em",
-                color: "rgba(26,26,26,0.5)",
-                textTransform: "uppercase",
-                marginBottom: 3,
-              }}
-            >
-              Страна
-            </div>
-            <div
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 400,
-                fontSize: 15,
-                letterSpacing: "0.1em",
-                color: "#1a1a1a",
-              }}
-            >
-              Россия
-            </div>
-          </div>
+          <div style={{ flex: 1, height: "0.5px", background: "rgba(26,26,26,0.25)", transformOrigin: "left", transform: visible ? "scaleX(1)" : "scaleX(0)", transition: "transform 1.4s ease 0.8s" }} />
         </div>
       </div>
     </div>
@@ -276,62 +234,56 @@ const Label = () => {
 
 const Index = () => {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#f0ede8",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "60px 20px",
-        gap: 48,
-      }}
-    >
-      {/* Page title */}
+    <div style={{
+      minHeight: "100vh",
+      background: "linear-gradient(145deg, #f5f2ee 0%, #ede9e3 100%)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "60px 20px",
+      gap: 52,
+    }}>
+
+      {/* Header */}
       <div style={{ textAlign: "center" }}>
-        <div
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
-            fontSize: 11,
-            letterSpacing: "0.4em",
-            color: "rgba(26,26,26,0.45)",
-            textTransform: "uppercase",
-            marginBottom: 8,
-          }}
-        >
-          Дизайн этикетки
-        </div>
-        <div
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
-            fontSize: 22,
-            letterSpacing: "0.05em",
-            color: "#1a1a1a",
-          }}
-        >
-          Флакон духов · Предпросмотр
-        </div>
-      </div>
-
-      {/* Label preview */}
-      <Label />
-
-      {/* Dimensions note */}
-      <div
-        style={{
+        <div style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontWeight: 300,
           fontSize: 10,
-          letterSpacing: "0.3em",
+          letterSpacing: "0.5em",
           color: "rgba(26,26,26,0.35)",
           textTransform: "uppercase",
-          textAlign: "center",
-        }}
-      >
-        320 × 480 px · Масштабируется под любой флакон
+          marginBottom: 10,
+        }}>
+          Предпросмотр этикетки
+        </div>
+        <div style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontWeight: 300,
+          fontStyle: "italic",
+          fontSize: 26,
+          letterSpacing: "0.05em",
+          color: "#1a1a1a",
+        }}>
+          23.33 · Eau de Parfum
+        </div>
+      </div>
+
+      {/* Label */}
+      <Label />
+
+      {/* Footer note */}
+      <div style={{
+        fontFamily: "'Cormorant Garamond', serif",
+        fontWeight: 300,
+        fontSize: 9,
+        letterSpacing: "0.35em",
+        color: "rgba(26,26,26,0.28)",
+        textTransform: "uppercase",
+        textAlign: "center",
+      }}>
+        660 × 460 px · Горизонтальный формат
       </div>
     </div>
   );
